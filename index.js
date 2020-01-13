@@ -30,7 +30,9 @@ app.get('*', (req, res) => {
     .catch((e) => console.log(e));
 
   statFileDeploy('./newfile_2.txt')
-    .catch((e) => console.log(e))
+    .then((res) => console.log(res))
+    .catch((e) => console.log(e));
+
 });
 
 app.listen('5000', () => {

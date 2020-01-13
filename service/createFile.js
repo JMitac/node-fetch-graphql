@@ -37,11 +37,14 @@ const readFileDeploy = async (file) => {
 };*/
 
 const statFileDeploy = async (file) => {
-  const stat = await statFileAsync(file);
-  if(stat && stat.isFile()){
-    console.log('=== File Exists !!!');
-  } else {
-    console.log('Error')
+  try {
+    const stat = await statFileAsync(file);
+    return {
+      'file' : stat.isFile(),
+      'directory' : stat.isDirectory()
+    }
+  }catch (e) {
+    return false
   }
 };
 

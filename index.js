@@ -1,30 +1,36 @@
 const express = require('express');
-const fetch = require('node-fetch');
+
 const tools = require('./service/api-tools');
-
-const url = 'https://jsonplaceholder.typicode.com/todos/1';
-const promise = fetch(url);
-const data = [];
-
-promise
-  .then(response => response.json())
-  .then(json => data.push(json))
-  .catch(err => console.error(err));
-
-/*async function helloWorld(){
-  return "hello world - ggwp"
-}
-let hello = helloWorld()
-console.log(hello);*/
-
-console.log('tools firstName: ',tools.firstName);
-//console.log('tools msgDeploy: ',tools.msgDeploy('queso !!!'));
+const { statFileDeploy } = require('./service/createFile');
 
 const app = express();
 
+const url = 'https://jsonplaceholder.typicode.com/todos/1';
+//const url = 'https://jsonplaceholder.typicode.com/todos';
+
+/*fs.stat('data.json', (err, stat) => {
+  if(err == null) {
+    console.log('file exists');
+  } else if (err.code === 'ENOENT') {
+    console.log('err : ',err);
+    console.log('file does not exist')
+  } else {
+    console.log('some other error : ',err.code);
+  }
+});*/
+
+//console.log('tools firstName: ',tools.firstName);
+//console.log('tools msgDeploy: ',tools.msgDeploy('queso !!!'));
+
 app.get('*', (req, res) => {
   res.send('Probando Express');
-  console.log('data ==> : ',data);
+
+  tools.getSpotlight(url)
+    .then((json) => console.log(json))
+    .catch((e) => console.log(e));
+
+  statFileDeploy('./newfile_2.txt')
+    .catch((e) => console.log(e))
 });
 
 app.listen('5000', () => {

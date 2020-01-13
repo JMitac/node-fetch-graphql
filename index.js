@@ -1,7 +1,7 @@
 const express = require('express');
 
 const tools = require('./service/api-tools');
-const { statFileDeploy } = require('./service/createFile');
+const { fnExistFile, fnWriteFile } = require('./service/createFile');
 
 const app = express();
 
@@ -25,14 +25,18 @@ const url = 'https://jsonplaceholder.typicode.com/todos/1';
 app.get('*', (req, res) => {
   res.send('Probando Express');
 
-  tools.getSpotlight(url)
+  /*tools.getSpotlight(url)
     .then((json) => console.log(json))
-    .catch((e) => console.log(e));
+    .catch((e) => console.log(e));*/
 
-  statFileDeploy('./newfile_2.txt')
+  fnExistFile('./data.txt')
     .then((res) => console.log(res))
     .catch((e) => console.log(e));
 
+  /*fnWriteFile('data.txt','file was created !!')
+    .then((res) => console.log(res))
+    .catch((e) => console.log(e));
+  */
 });
 
 app.listen('5000', () => {
